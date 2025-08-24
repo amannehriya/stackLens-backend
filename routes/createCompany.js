@@ -1,26 +1,37 @@
 const express = require('express');
 const router = express.Router();
-
+const upload = require('../config/multer-config');
 const companies = require('../models/companyModel');
 
-router.post("/create", async (req, res, next) => {
+router.post("/create", upload.single("logo"), async (req, res, next) => {
     try {
-        const { name, languages, salary, jobAvailability, minKnowledge, location, companysize, createdAt, website } = req.body;
-        console.log(name)
-        if (!name || !languages || !salary || !jobAvailability) {
+        const { name, languages, salary, jobAvailability, minKnowledge, location, companysize, createdAt, website, } = req.body;
+       
+       let parsedLanguage = JSON.parse(languages);
+       let parsedSalary = JSON.parse(salary)
+ console.log( salary, languages)
+
+        const logo = req.file ? {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+        } : null;
+
+
+        if (!name || !languages || !salary) {
             return res.status(400).json({ "note": "please write all this neccessary detail" });
         }
 
         const company = {
             name,
-            languages, // must be array
-            salary,
+           languages: parsedLanguage, // must be array
+            salary:parsedSalary,
             jobAvailability,
             minKnowledge,
             location,
             companysize,
             website,
-            createdAt
+            createdAt,
+            logo
         }
 
 

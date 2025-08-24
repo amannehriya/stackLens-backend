@@ -7,8 +7,9 @@ const flash = require("connect-flash")
 const db = require("./config/mongoose-con");
 const searchRoute = require('./routes/SearchEngine')
 const createCompany = require('./routes/createCompany');
+const cors = require('cors');
 
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

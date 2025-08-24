@@ -45,6 +45,10 @@ const companySchema = mongoose.Schema({
       type: Date,
       default: Date.now,
     },
+    logo:{
+     data:Buffer,
+     contentType:String,
+    }
 })
 
 module.exports = mongoose.model("company",companySchema);
