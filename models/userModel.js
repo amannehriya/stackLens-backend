@@ -11,9 +11,22 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    googleId: {
+        type: String,
+        unique: true,   // one user per Google account
+        sparse: true    // allows other users without GoogleId (if you support local login too)
+    },
+    profilePic: {
+        data: Buffer,
+        contentType: String,
+    }
+    ,
     password: {
         type: String,
-        required: true
+        // required: true
+    },
+    location:{
+          type:String
     },
     phoneNumber: {
         type: Number,

@@ -1,9 +1,10 @@
 const express = require('express');
-const { registerUser, loginUser, logoutUser } = require('../controllers/authController');
+const { registerUser, loginUser, logoutUser,setProfile } = require('../controllers/authController');
 const router = express.Router();
 const isLoggedIn = require('../middleware/isLoggedIn')
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
+const upload = require('../config/multer-config');
 
 
 router.post('/register',registerUser);
@@ -23,13 +24,35 @@ router.get('/profile',isLoggedIn,async(req,res)=>{
        let user =  await userModel.findById(decoded.id)
        .select("-password -createdCompany") ;
      
-
+// console.log(user);
      return  res.status(201).json({status:true,data:user})
   } catch (error) {
     return res.status(500).json({status:false,error});
   }
 
 })
+
+router.get('/myprofile',isLoggedIn,async(req,res)=>{
+       
+  try {
+
+     const token = req?.cookies?.token;
+  
+       let decoded = jwt.verify(token,process.env.JWT_KEY);
+
+ 
+
+       let user =  await userModel.findById(decoded.id)
+       .select("-password -createdCompany -googleId") ;
+     
+// console.log(user);
+    return  res.status(201).json(user)
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
+})
+router.post('/myprofile/:user_id',isLoggedIn,upload.single('profilePic'),setProfile)
 
 router.get('/logout',isLoggedIn,logoutUser);
 

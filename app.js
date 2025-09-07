@@ -10,9 +10,11 @@ const createCompany = require('./routes/createCompany');
 const userRoute = require('./routes/user');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
-
-
+const authRouter = require('./routes/authRouter')
+const passport = require('passport');
+const comunicationRoute  = require('./routes/communication')
+require('dotenv').config();
+require('./config/google-strategy');
 app.use(cors({
     origin:"http://localhost:5173", // React app
       credentials: true,               // Allow cookies
@@ -32,6 +34,8 @@ app.use(expressSession({
     }
 }))
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //routers
@@ -42,5 +46,6 @@ app.get("/",(req,res)=>{
 app.use("/search",searchRoute);
 app.use("/company",createCompany)
 app.use("/user",userRoute);
-
+app.use('/auth',authRouter);
+app.use('/comunication',comunicationRoute)
 app.listen(3000);

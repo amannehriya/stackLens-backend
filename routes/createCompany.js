@@ -162,7 +162,7 @@ const companylist = await  Promise.all( user.createdCompany.map(async(company_id
 
 return res.status(201).json({companylist})
 } catch (error) {
-    console.log(error)
+    // console.log(error)
     return res.status(500).json({error});
 }
 })

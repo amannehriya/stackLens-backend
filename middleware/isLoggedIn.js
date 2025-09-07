@@ -5,7 +5,7 @@ const userModel = require("../models/userModel");
 module.exports = async(req,res,next)=>{
     try{
         // console.log("hit")
-        const token = req?.cookies?.token;
+  const token = req?.cookies?.token;
     if(!token){
      return  res.status(400).json({status:false,error: "you need to login first"});
 ;
@@ -14,7 +14,7 @@ module.exports = async(req,res,next)=>{
      let decoded = jwt.verify(token,process.env.JWT_KEY);
 
      let user =  await userModel
-     .findOne({username:decoded.username})
+     .findOne({email:decoded.email})
      .select("-password")  //esa krne se user ke password ke alava hmko saari detail mil jayegi
      
        if (!user) return res.status(400).json({ status: false, message: "Invalid Token" })
