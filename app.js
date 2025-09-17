@@ -16,10 +16,7 @@ const passport = require('passport');
 const comunicationRoute  = require('./routes/communication')
 require('dotenv').config();
 require('./config/google-strategy');
-app.use(cors({
-    origin:"http://localhost:5173", // React app
-      credentials: true,               // Allow cookies
-}))
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
