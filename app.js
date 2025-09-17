@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const expressSession = require("express-session");
 const flash = require("connect-flash")
+const port = process.env.PORT || 3000;
 const db = require("./config/mongoose-con");
 const searchRoute = require('./routes/SearchEngine')
 const createCompany = require('./routes/createCompany');
@@ -48,4 +49,6 @@ app.use("/company",createCompany)
 app.use("/user",userRoute);
 app.use('/auth',authRouter);
 app.use('/comunication',comunicationRoute)
-app.listen(3000);
+app.listen(port,()=>{
+    console.log(`sserver is running on ${port}`)
+});

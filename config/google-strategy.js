@@ -7,7 +7,7 @@ passport.use(
         {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"  //means jese hi authentication complete ho jayegi to is url pr chalejayega
+    callbackURL: `http://localhost:${process.env.PORT}/auth/google/callback`  //means jese hi authentication complete ho jayegi to is url pr chalejayega
   },
   async function(accessToken, refreshToken, profile, cb) {
     // console.log("line13")
