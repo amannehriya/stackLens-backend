@@ -16,7 +16,10 @@ const passport = require('passport');
 const comunicationRoute  = require('./routes/communication')
 require('dotenv').config();
 require('./config/google-strategy');
-app.use(cors());
+app.use(cors(
+    origin:"https://stacklens.onrender.com",
+    credentials:true
+));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
