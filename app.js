@@ -16,10 +16,10 @@ const passport = require('passport');
 const comunicationRoute  = require('./routes/communication')
 require('dotenv').config();
 require('./config/google-strategy');
-app.use(cors(
+app.use(cors({
     origin:"https://stacklens.onrender.com",
     credentials:true
-));
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,7 +31,7 @@ app.use(expressSession({
     cookie:{
         httpOnly:true,
         secure:true,
-        sameSite:'strict' // "none"  frontend & backend are on different domains
+        sameSite:'none' // "none"  frontend & backend are on different domains
     }
 }))
 app.use(flash());
