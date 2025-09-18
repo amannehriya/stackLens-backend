@@ -25,7 +25,11 @@ module.exports.registerUser = async function (req, res) {
                     email,
                 });
                 let token = generateToken(user);
-                res.cookie("token", token);
+                res.cookie("token", token,{
+                                httpOnly: true,
+                                 secure: true,     // must be true on HTTPS
+                                  sameSite: "none"  // allow cross-site
+                                         });
                 return res.status(201).json({ status: true, message: 'user created successfully' });
 
             })
@@ -54,7 +58,11 @@ module.exports.loginUser = async (req, res) => {
             if (result) {
                 let token = generateToken(user);
 
-                res.cookie("token", token);
+                res.cookie("token", token,{
+                                httpOnly: true,
+                                 secure: true,     // must be true on HTTPS
+                                  sameSite: "none"  // allow cross-site
+                                         });
 
                 res.json({ status: true, message: "password matched" })
             }
