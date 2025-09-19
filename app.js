@@ -31,7 +31,7 @@ app.use(expressSession({
     cookie:{
         httpOnly:true,
         secure:true,
-        sameSite:'strict' // "none"  frontend & backend are on different domains
+        sameSite:'none' // "none"  frontend & backend are on different domains
     }
 }))
 app.use(flash());

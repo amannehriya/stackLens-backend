@@ -25,7 +25,11 @@ module.exports.registerUser = async function (req, res) {
                     email,
                 });
                 let token = generateToken(user);
-                res.cookie("token", token);
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    secure: true,     // must be true on HTTPS
+                    sameSite: "none"  // allow cross-site
+                });
                 return res.status(201).json({ status: true, message: 'user created successfully' });
 
             })
@@ -54,7 +58,11 @@ module.exports.loginUser = async (req, res) => {
             if (result) {
                 let token = generateToken(user);
 
-                res.cookie("token", token);
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    secure: true,     // must be true on HTTPS
+                    sameSite: "none"  // allow cross-site
+                });
 
                 res.json({ status: true, message: "password matched" })
             }
@@ -73,8 +81,9 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.logoutUser = async (req, res) => {
     try {
-
-        res.cookie("token", "")
+      
+        res.cookie("token", "");
+        res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "none" });
         console.log("logout")
         res.status(201).json({ message: "logout" });
 
@@ -85,11 +94,11 @@ module.exports.logoutUser = async (req, res) => {
 
 module.exports.setProfile = async (req, res) => {
     try {
-        const {user_id} = req.params;
+        const { user_id } = req.params;
         const { name, location, phoneNumber } = req.body;
-//  console.log(phoneNumber)
+        //  console.log(phoneNumber)
         const updatedData = {
-            username:name,
+            username: name,
             location,
             phoneNumber
         }
@@ -103,10 +112,10 @@ module.exports.setProfile = async (req, res) => {
         const updatedUser = await userModel.findByIdAndUpdate(user_id, updatedData, {
             new: true, runValidators: true
         }).select('-password');
-        if (updatedUser) res.status(201).json({ status: true, data: updatedUser,message:"profile update successfully" });
+        if (updatedUser) res.status(201).json({ status: true, data: updatedUser, message: "profile update successfully" });
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ status: false, data: error,message:"profile not update" })
+        res.status(500).json({ status: false, data: error, message: "profile not update" })
     }
 }
