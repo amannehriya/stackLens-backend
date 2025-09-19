@@ -17,9 +17,9 @@ const comunicationRoute  = require('./routes/communication')
 require('dotenv').config();
 require('./config/google-strategy');
 app.use(cors({
-    origin:"http://localhost:5173", // React app
-      credentials: true,               // Allow cookies
-}))
+    origin:"https://stacklens.onrender.com",
+    credentials:true
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
