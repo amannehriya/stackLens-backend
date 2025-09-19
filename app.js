@@ -17,7 +17,7 @@ const comunicationRoute  = require('./routes/communication')
 require('dotenv').config();
 require('./config/google-strategy');
 app.use(cors({
-    origin:"https://stacklens.onrender.com",
+    origin:process.env.CORS,
     credentials:true
 }));
 app.use(cookieParser());
