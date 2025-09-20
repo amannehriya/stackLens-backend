@@ -18,11 +18,11 @@ router.get(
     // console.log("Callback route hit, req.user:");
      res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set true in production with HTTPS
-      sameSite: "lax"
+      secure: true, // set true in production with HTTPS
+      sameSite: "none"
     });
 
-     res.redirect(`http://localhost:5173/google/authHandle`)
+     res.redirect(`https://stacklens.onrender.com/google/authHandle`)
   }
 );
 module.exports = router;
